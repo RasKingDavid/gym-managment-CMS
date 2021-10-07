@@ -1,0 +1,54 @@
+<div class="panel-body">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <?php echo Form::label('name','Service Name'); ?>
+
+                <?php echo Form::text('name',null,['class'=>'form-control', 'id' => 'name']); ?>
+
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <?php echo Form::label('description','Service Description'); ?>
+
+                <?php echo Form::text('description',null,['class'=>'form-control', 'id' => 'description']); ?>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+            <?php if(isset($service)): ?>
+            <div class="form-group">
+                <?php echo Form::label('Service Themnail','Service Themnail'); ?>
+
+                <?php echo Form::file('service_thumbnail',null,['class'=>'form-control', 'id' => 'service_thumbnail']); ?>
+
+            </div>
+            <div class="col-sm-2">
+            <img alt="profile Pic" class="pull-right" src="<?php echo e(asset('media/service/' .$service->service_thumbnail)); ?>" height="70" width="70">
+        </div>
+
+                <?php else: ?>
+                <div class="form-group">
+                <?php echo Form::label('Service Themnail','Service Themnail'); ?>
+
+                <?php echo Form::file('service_thumbnail',null,['class'=>'form-control', 'id' => 'service_thumbnail']); ?>
+
+            </div>
+
+            <?php endif; ?>
+        </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <?php echo Form::submit($submitButtonText, ['class' => 'btn btn-primary pull-right']); ?>
+
+            </div>
+        </div>
+    </div>
+</div>
+                            

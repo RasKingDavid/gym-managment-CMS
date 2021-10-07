@@ -1,0 +1,24 @@
+
+<?php $settings = Utilities::getSettings();
+      $services =  App\Service::all();
+?>
+<style>
+    .auth-page, header .logo, .leftside, .leftside .widget .footer {
+	/* background: #000000; */
+	
+    background: <?php echo e($settings['theme_color']); ?>;
+}
+
+.login {
+    background: <?php echo e($settings['theme_color']); ?> !important;
+    color: #fff !important;
+    /* border:1px solid #fff !important; */
+}
+
+.btn-info{
+    background: <?php echo e($settings['theme_color']); ?> !important;
+    color: #fff !important;
+}
+
+
+</style>

@@ -1,0 +1,17 @@
+<div class="table-responsive <?php echo (! $birthdays->isEmpty() ? 'panel-scroll' : ''); ?>">
+    <table class="table table-hover">
+        <?php $__empty_1 = true; foreach($birthdays as $birthday): $__empty_1 = false; ?>
+            <tr>
+                <td><a href="<?php echo e(action('MembersController@show',['id' => $birthday->id])); ?>"><img
+                                src="<?php echo e(asset('media/member/' .$birthday->memberDetail->image)); ?>"/ width="50" height="50"></a></td>
+                <td><a href="<?php echo e(action('MembersController@show',['id' => $birthday->id])); ?>"><?php echo e($birthday->name); ?></a></td>
+                <td><?php echo e($birthday->contact); ?></td>
+                <td><?php echo e($birthday->DOB); ?></td>
+            </tr>
+        <?php endforeach; if ($__empty_1): ?>
+            <div class="tab-empty-panel font-size-24 color-grey-300">
+                No Data
+            </div>
+        <?php endif; ?>
+    </table>
+</div>

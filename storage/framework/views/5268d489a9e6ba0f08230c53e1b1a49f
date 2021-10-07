@@ -1,0 +1,49 @@
+
+
+<?php $__env->startSection('content'); ?>
+
+    <div class="rightside bg-grey-100">
+        <div class="container-fluid">
+
+            <!-- Error Log -->
+            <?php if($errors->any()): ?>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                    <ul>
+                        <?php foreach($errors->all() as $error): ?>
+                            <li><?php echo e($error); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel no-border">
+                        <div class="panel-title">
+                            <div class="panel-head font-size-20" style="float: left"><h4>Add plan details</h4> </div>
+                            <a href="<?php echo e(URL::previous()); ?>" class="btn btn-primary btn-sm" style="float: right; color:#fff"> back</a>
+                        </div>
+
+                        <?php echo Form::Open(['url' => 'plans','id'=>'plansform']); ?>
+
+
+                        <?php echo $__env->make('plans.form',['submitButtonText' => 'Add'], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+                        <?php echo Form::Close(); ?>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('footer_scripts'); ?>
+    <script src="<?php echo e(URL::asset('assets/js/plan.js')); ?>" type="text/javascript"></script>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,380 @@
+
+
+<?php $__env->startSection('content'); ?>
+
+    <div class="rightside bg-grey-100">
+        <div class="container-fluid">
+            <?php echo $__env->make('flash::message', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            <?php if (\Entrust::can(['manage-gymie','view-dashboard-quick-stats'])) : ?>
+            <!-- Stat Tile  -->
+            <div class="row margin-top-10">
+                <div class="container pt-5">
+                    <div class="row align-items-stretch">
+                        <?php /* new orders */ ?>
+                        <div class="col-md-12 alert alert-info text-center " style="margin-top: 5%;margin-bottom:5%">
+                            <h4 class="text-success"><i class="fa fa-bell    "></i> You have <?php echo e($newOrders->count()); ?> new orders</h4>
+                            <a href="<?php echo e(route('new.orders')); ?>" class="btn btn-success text-center">view orders</a>
+                        </div>
+                        <!-- Total Members -->
+                    <div class="c-dashboardInfo col-lg-4 col-md-2 col-sm-6 col-xs-12">
+                        <?php echo $__env->make('dashboard._index.totalMembers', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    </div>
+
+                    <!-- Registrations This Weeks -->
+                    <div class="c-dashboardInfo col-lg-4 col-md-2 col-sm-6 col-xs-12">
+                        <?php echo $__env->make('dashboard._index.expiredMembers', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    </div>
+
+                    <!-- Inactive Members -->
+                    <div class="c-dashboardInfo col-lg-3 col-md-2 col-sm-6 col-xs-12">
+                        <?php echo $__env->make('dashboard._index.inActiveMembers', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    </div>
+
+                    <!-- Members Expired -->
+                    <div class="c-dashboardInfo col-lg-4 col-md-2 col-sm-6 col-xs-12">
+                        <?php echo $__env->make('dashboard._index.registeredThisMonth', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    </div>
+
+                    <!-- Outstanding Payments -->
+                    <div class="c-dashboardInfo col-lg-4 col-md-2 col-sm-6 col-xs-12">
+                        <?php echo $__env->make('dashboard._index.outstandingPayments', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    </div>
+
+                    <!-- Collection Revenue-->
+                    <div class="c-dashboardInfo col-lg-3 col-md-2 col-sm-6 col-xs-12">
+                         <?php echo $__env->make('dashboard._index.collection', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    </div>
+                    <!-- Shop Revenue-->
+                    <?php
+                        $sum = App\PosInvoice::whereMonth('created_at','=',date('m'))->sum('total_amount');
+                        $shop_revenue = App\ShopInvoice::whereMonth('created_at','=',date('m'))->sum('total');
+                    ?>
+                    <div class="c-dashboardInfo col-lg-6 col-md-2 col-sm-6 col-xs-12">
+                        <div class="wrap">
+                            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
+                            <i class="font-size-24 color-green-600 fa fa-usd"></i>
+                            </h4><span class="hind-font caption-12 c-dashboardInfo__count">
+                                <div class=" font-roboto" data-toggle="counter" data-start="0" data-from="0"
+                                    data-to="<?php echo e($sum); ?>" data-speed="500" data-refresh-interval="10"></div>
+                            </span><span
+                            class="hind-font caption-12 c-dashboardInfo__subInfo">
+                            <a href="<?php echo e(route('pos.index')); ?>">Sales Revenue</a>
+                            </span> 
+                        </div>
+                    </div>
+                    <div class="c-dashboardInfo col-lg-6 col-md-2 col-sm-6 col-xs-12">
+                        <div class="wrap">
+                            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
+                            <i class="font-size-24 color-green-600 fa fa-usd"></i>
+                            </h4><span class="hind-font caption-12 c-dashboardInfo__count">
+                                <div class=" font-roboto" data-toggle="counter" data-start="0" data-from="0"
+                                    data-to="<?php echo e($shop_revenue); ?>" data-speed="500" data-refresh-interval="10"></div>
+                            </span><span
+                            class="hind-font caption-12 c-dashboardInfo__subInfo">
+                            <a href="<?php echo e(route('new.orders')); ?>">Online Revenue</a>
+                            </span> 
+                        </div>
+                    </div>
+                    <div class="c-dashboardInfo col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="wrap">
+                            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
+                            <i class="font-size-24 color-green-600 fa fa-usd"></i>
+                            </h4><span class="hind-font caption-12 c-dashboardInfo__count">
+                                <div class=" font-roboto" data-toggle="counter" data-start="0" data-from="0"
+                                    data-to="<?php echo e($expirings->count()); ?>" data-speed="500" data-refresh-interval="10"></div>
+                            </span><span
+                            class="hind-font caption-12 c-dashboardInfo__subInfo">
+                                <a href="<?php echo e(url('subscriptions/expiring')); ?>">Expiring Subscriptions</a>
+                            </span> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endif; // Entrust::can ?>
+
+            <!--Member Quick views -->
+            <div class="row"> <!--Main Row-->
+                <?php if (\Entrust::can(['manage-gymie','view-dashboard-members-tab'])) : ?>
+                <div class="col-lg-6">
+                    <div class="panel">
+                        <div class="panel-title">
+                            <div class="panel-head"><i class="fa fa-users"></i><a href="<?php echo e(action('MembersController@index')); ?>">Members</a></div>
+                            <div class="pull-right"><a href="<?php echo e(action('MembersController@create')); ?>" class="btn-sm btn-primary active" role="button"><i
+                                            class="fa fa-user-plus"></i> Add</a></div>
+                        </div>
+
+                        <div class="panel-body with-nav-tabs">
+                            <!-- Tabs Heads -->
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#recent" data-toggle="tab">Recent <span class="label label-info margin-left-5"><?php echo e($recentCount); ?></span></a></li>
+                                 <li><a href="#birthdays" data-toggle="tab">Birthdays<span class="label label-success margin-left-5"><?php echo e($birthdayCount); ?></span></a>
+                                </li>
+                                <li><a href="#expiring" data-toggle="tab">Expiring<span
+                                                class="label label-warning margin-left-5"><?php echo e($expiringCount); ?></span></a></li>
+                                <li><a href="#expired" data-toggle="tab">Expired<span class="label label-danger margin-left-5"><?php echo e($expiredCount); ?></span></a>
+                                </li>
+                               
+                            </ul>
+
+                            <!-- Tab Content -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="recent">
+                                    <?php echo $__env->make('dashboard._index.recents', ['recents' =>  $recents], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                </div>
+
+                                 <div class="tab-pane fade" id="birthdays">
+                                    <?php echo $__env->make('dashboard._index.birthdays', ['birthdays' => $birthdays], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                </div>
+
+                                <div class="tab-pane fade " id="expiring">
+                                    <?php echo $__env->make('dashboard._index.expiring', ['expirings' => $expirings], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                </div>
+
+                                <div class="tab-pane fade" id="expired">
+                                    <?php echo $__env->make('dashboard._index.expired', ['allExpired' => $allExpired], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; // Entrust::can ?>
+
+                <?php if (\Entrust::can(['manage-gymie','view-dashboard-enquiries-tab'])) : ?>
+                <!--Enquiry Quick view Tabs-->
+                <div class="col-lg-6">
+                    <div class="panel">
+                        <div class="panel-title">
+                            <div class="panel-head"><i class="fa fa-phone"></i><a href="<?php echo e(action('EnquiriesController@index')); ?>">Enquiries</a></div>
+                            <div class="pull-right"><a href="<?php echo e(action('EnquiriesController@create')); ?>" class="btn-sm btn-primary active" role="button"><i
+                                            class="fa fa-phone"></i> Add</a></div>
+                        </div>
+
+                        <div class="panel-body with-nav-tabs">
+                            <!-- Tabs Heads -->
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#enquiries" data-toggle="tab">Enquiries</a></li>
+                                <li><a href="#reminders" data-toggle="tab">Reminders<span class="label label-warning margin-left-5"><?php echo e($reminderCount); ?></span></a>
+                                </li>
+                            </ul>
+
+                            <!-- Tab Content -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="enquiries">
+                                    <?php echo $__env->make('dashboard._index.enquiries', ['enquiries' => $enquiries], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                </div>
+
+                                <div class="tab-pane fade" id="reminders">
+                                    <?php echo $__env->make('dashboard._index.reminders', ['reminders' => $reminders], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php /* stocks */ ?>
+                <div class="col-lg-12">
+                    <div class="panel">
+                        <div class="panel-title">
+                            <div class="panel-head"><i class="fa fa-archive"></i><a href="<?php echo e(route('product.index')); ?>">Minimum Stock Reminder</a></div>
+                            <div class="pull-right"><a href="<?php echo e(route('product.create')); ?>" class="btn-sm btn-primary active" role="button"><i
+                                            class="fa fa-archive"></i> Add</a></div>
+                        </div>
+
+                        <div class="panel-body with-nav-tabs">
+                            <!-- Tabs Heads -->
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#enquiries" data-toggle="tab">Stocks</a></li>
+                            </ul>
+
+                            <!-- Tab Content -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="enquiries">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th>Product Name</th>
+                                            <th>SKU</th>
+                                            <th>Current Stock</th>
+                                            <th>Minimum Stock</th>
+                                        </thead>
+                                        <?php foreach($products as $item): ?>
+                                            <?php if($item->stock <= $item->min_stock): ?>
+                                                <tr>
+                                                    <td><?php echo e($item->product_name); ?></td>
+                                                    <td><?php echo e($item->sku); ?></td>
+                                                    <td><?php echo e($item->stock); ?></td>
+                                                    <td><?php echo e($item->min_stock); ?></td>
+                                                </tr>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; // Entrust::can ?>
+            </div> <!--/Main row -->
+
+
+            <?php if (\Entrust::can(['manage-gymie','view-dashboard-expense-tab'])) : ?>
+            <div class="row">
+                <!--Expense Quick view Tabs-->
+                <div class="col-lg-6">
+                    <div class="panel">
+                        <div class="panel-title">
+                            <div class="panel-head"><i class="fa fa-usd"></i><a href="<?php echo e(action('ExpensesController@index')); ?>">Expenses</a></div>
+                            <div class="pull-right"><a href="<?php echo e(action('ExpensesController@create')); ?>" class="btn-sm btn-primary active" role="button">
+                                    <i class="fa fa-usd"></i> Add</a>
+                            </div>
+                        </div>
+
+                        <div class="panel-body with-nav-tabs">
+                            <!-- Tabs Heads -->
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#due" data-toggle="tab">Due</a></li>
+                                <li><a href="#outstanding" data-toggle="tab">Outstanding</a></li>
+                            </ul>
+
+                            <!-- Tab Content -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="due">
+                                    <?php echo $__env->make('dashboard._index.due', ['dues' => $dues], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                </div>
+
+                                <div class="tab-pane fade" id="outstanding">
+                                    <?php echo $__env->make('dashboard._index.outStanding', ['outstandings' => $outstandings], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; // Entrust::can ?>
+
+                <div class="col-lg-6">
+                    <div class="panel">
+                        <div class="panel-title">
+                            <div class="panel-head"><i class="fa fa-credit-card-alt" aria-hidden="true"></i>Cheques</div>
+                        </div>
+
+                        <div class="panel-body with-nav-tabs">
+                            <!-- Tabs Heads -->
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#recieved" data-toggle="tab">Recieved<span
+                                                class="label label-warning margin-left-5"><?php echo e($recievedChequesCount); ?></span></a></li>
+                                <li><a href="#deposited" data-toggle="tab">Deposited<span
+                                                class="label label-primary margin-left-5"><?php echo e($depositedChequesCount); ?></span></a></li>
+                                <li><a href="#bounced" data-toggle="tab">Bounced<span class="label label-danger margin-left-5"><?php echo e($bouncedChequesCount); ?></span></a>
+                                </li>
+                            </ul>
+
+                            <!-- Tab Content -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="recieved">
+                                    <?php echo $__env->make('dashboard._index.receivedCheque', ['recievedCheques' =>  $recievedCheques], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                </div>
+
+                                <div class="tab-pane fade" id="deposited">
+                                    <?php echo $__env->make('dashboard._index.depositedCheques', ['depositedCheques' =>  $depositedCheques], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                </div>
+
+                                <div class="tab-pane fade" id="bounced">
+                                    <?php echo $__env->make('dashboard._index.bouncedCheques', ['bouncedCheques' =>  $bouncedCheques], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel">
+                        <div class="panel-title">
+                            <div class="panel-head"><i class="fa fa-phone" aria-hidden="true"></i>Mobile Banking</div>
+                        </div>
+
+                        <div class="panel-body with-nav-tabs">
+                            <!-- Tabs Heads -->
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#recieved" data-toggle="tab">Recieved<span
+                                                class="label label-warning margin-left-5"><?php echo e($recievedChequesCount); ?></span></a></li>
+                                <li><a href="#deposited" data-toggle="tab">Deposited<span
+                                                class="label label-primary margin-left-5"><?php echo e($depositedChequesCount); ?></span></a></li>
+                                <li><a href="#bounced" data-toggle="tab">Bounced<span class="label label-danger margin-left-5"><?php echo e($bouncedChequesCount); ?></span></a>
+                                </li>
+                            </ul>
+
+                            <!-- Tab Content -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="recieved">
+                                    <?php echo $__env->make('dashboard._index.receivedCheque', ['recievedCheques' =>  $recievedCheques], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                </div>
+
+                                <div class="tab-pane fade" id="deposited">
+                                    <?php echo $__env->make('dashboard._index.depositedCheques', ['depositedCheques' =>  $depositedCheques], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                </div>
+
+                                <div class="tab-pane fade" id="bounced">
+                                    <?php echo $__env->make('dashboard._index.bouncedCheques', ['bouncedCheques' =>  $bouncedCheques], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+           
+
+            <!-- SMS request confirmation Modal -->
+            <div id="smsRequestModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Confirm request new sms pack</h4>
+                        </div>
+                        <div class="modal-body">
+                            <?php echo Form::Open(['action' => 'DashboardController@smsRequest']); ?>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <?php echo Form::label('smsCount','Select SMS Pack'); ?>
+
+                                        <?php echo Form::select('smsCount',array('5000' => '5000 sms', '10000' => '10000 sms', '15000' => '15000 sms'),null,['class'=>'form-control selectpicker show-tick show-menu-arrow', 'id' => 'smsCount']); ?>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-info" value="Submit" id="smsRequest"/>
+                            <?php echo Form::Close(); ?>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footer_scripts'); ?>
+    <script src="<?php echo e(URL::asset('assets/plugins/morris/raphael-2.1.0.min.js')); ?>" type="text/javascript"></script>
+    <script src="<?php echo e(URL::asset('assets/plugins/morris/morris.min.js')); ?>" type="text/javascript"></script>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footer_script_init'); ?>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // gymie.loadmorris();
+        });
+    </script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

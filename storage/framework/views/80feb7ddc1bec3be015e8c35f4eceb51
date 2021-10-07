@@ -1,0 +1,31 @@
+<?php $__env->startSection('content'); ?>
+    <div class="container-fluid mt-5 mb-5">
+        <div class="row">
+            <div class="col-12 col-md-4 text-center">
+                <img src="<?php echo e(asset('files/product_images'.'/'.$product->image)); ?>" alt="image-missing"> <br>
+                <span><?php echo e($product->product_name); ?></span> <br> <br>
+               
+                <?php if($product->stock > 0): ?>
+                    <span class="bg-success p-1 rounded">In Stock</span> <br> <br>
+                <?php else: ?>
+                    <span class="bg-warning p-1 rounded">In Stock</span> <br> <br>
+                <?php endif; ?>
+
+                <?php if($product->discount_price != 0): ?>
+                    <span><b>Price: </b><del> Br. <?php echo e($product->sale_price); ?></del></span> <br>
+                    <span><b>Discount Price:</b> Br. <?php echo e($product->discount_price); ?></span> <br>
+                <?php else: ?>
+                    <span><b>Price:</b> Br. <?php echo e($product->sale_price); ?></span> <br>
+                <?php endif; ?>
+               
+                <a href="<?php echo e(route('cart.add', $product->id)); ?>" class="btn btn-warning btn-sm text-center mt-3"><i class="fa fa-cart-plus"></i> add to cart</a>
+            </div>
+            <div class="col-12 col-md-8">
+                <p>
+                   <?php echo e($product->description); ?> 
+                </p>
+            </div>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.frontEnd.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

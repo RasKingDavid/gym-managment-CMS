@@ -1,0 +1,25 @@
+
+<div class="table-responsive <?php echo (! $outstandings->isEmpty() ? 'panel-scroll' : ''); ?>">
+    <table class="table table-hover">
+        <?php $__empty_1 = true; foreach($outstandings as $outstanding): $__empty_1 = false; ?>
+            <tr>
+                <td>
+                    <a href="<?php echo e(action('ExpensesController@edit',['id' => $outstanding->id])); ?>"><?php echo e($outstanding->name); ?></a>
+                </td>
+                <td>
+                    <a href="<?php echo e(action('ExpensesController@edit',['id' => $outstanding->id])); ?>"><?php echo e($outstanding->amount); ?></a>
+                </td>
+                <td>
+                    <a href="<?php echo e(action('ExpensesController@edit',['id' => $outstanding->id])); ?>"><?php echo e($outstanding->due_date->format('Y-m-d')); ?></a>
+                </td>
+                <td><a class="btn btn-info btn-xs btn pull-right"
+                       href="<?php echo e(action('ExpensesController@paid',['id' => $outstanding->id])); ?>">Pay</a></td>
+            </tr>
+        <?php endforeach; if ($__empty_1): ?>
+            <div class="tab-empty-panel font-size-24 color-grey-300">
+                No Data
+            </div>
+        <?php endif; ?>
+    </table>
+</div>
+                                

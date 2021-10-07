@@ -1,0 +1,60 @@
+<?php $__env->startSection('header_scripts'); ?>
+  
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <div class="rightside bg-grey-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <?php echo $__env->make('flash::message', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                </div>
+                <div class="col-md-12">
+                    <a href="<?php echo e(route('pos.create')); ?>" class="btn btn-primary btn-md"><i class="fa fa-plus-circle    "> Create New</i></a>
+                </div>
+
+                <div class="col-md-12">
+                    <table class="table table-striped" id="datatable">
+                        <thead>
+                            <th>Invoice Number#</th>
+                            <th>Sold By</th>
+                            <th>Customer Name</th>
+                            <th>Customer Phone</th>
+                            <th>Total Amount</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            <?php foreach($invoices as $invoice): ?>
+                                <tr>
+                                    <td><?php echo e($invoice->invoice_number); ?></td>
+                                    <td><?php echo e($invoice->seller->name); ?></td>
+                                    <td><?php echo e($invoice->customer->name); ?></td>
+                                    <td><?php echo e($invoice->customer->phone); ?></td>
+                                    <td><?php echo e($invoice->total_amount); ?></td>
+                                    <td>
+                                        <?php echo e(\Carbon\Carbon::parse($invoice->created_at)->format('d M Y h:m a')); ?>
+
+                                    </td>
+                                    <td>
+                                        <a href="<?php echo e(route('pos.print',$invoice->id)); ?>" class="btn btn-success btn-md"><i class="fa fa-print    "></i></a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footer_script_init'); ?>
+    <script>
+        $(document).ready( function () {
+            $('#datatable').DataTable();
+        });
+    </script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

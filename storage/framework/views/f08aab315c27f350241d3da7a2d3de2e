@@ -1,0 +1,212 @@
+<?php use Carbon\Carbon; ?>
+
+<!-- Hidden Fields -->
+<?php if(Request::is('members/create')): ?>
+    <?php echo Form::hidden('invoiceCounter',$invoiceCounter); ?>
+
+    <?php echo Form::hidden('memberCounter',$memberCounter); ?>
+
+<?php endif; ?>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <?php echo Form::label('member_code','Member code'); ?>
+
+            <?php echo Form::text('member_code',$member_code,['class'=>'form-control', 'id' => 'member_code', ($member_number_mode == \constNumberingMode::Auto ? 'readonly' : '')]); ?>
+
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <?php echo Form::label('name','Name',['class'=>'control-label']); ?>
+
+            <?php echo Form::text('name',null,['class'=>'form-control', 'id' => 'name']); ?>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <?php echo Form::label('DOB','Date of birth'); ?>
+
+            <?php echo Form::text('DOB',null,['class'=>'form-control datepicker-default', 'id' => 'DOB']); ?>
+
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <?php echo Form::label('gender','Gender'); ?>
+
+            <?php echo Form::select('gender',array('m' => 'Male', 'f' => 'Female'),null,['class'=>'form-control selectpicker show-tick show-menu-arrow', 'id' => 'gender']); ?>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <?php echo Form::label('contact','Contact'); ?>
+
+            <?php echo Form::text('contact',null,['class'=>'form-control', 'id' => 'contact']); ?>
+
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <?php echo Form::label('email','Email'); ?>
+
+            <?php echo Form::text('email',null,['class'=>'form-control', 'id' => 'email']); ?>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <?php echo Form::label('emergency_contact','Emergency contact'); ?>
+
+            <?php echo Form::text('emergency_contact',null,['class'=>'form-control', 'id' => 'emergency_contact']); ?>
+
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <?php echo Form::label('health_issues','Health issues'); ?>
+
+            <?php echo Form::text('health_issues',null,['class'=>'form-control', 'id' => 'health_issues']); ?>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <?php echo Form::label('proof_name','Proof name'); ?>
+
+            <?php echo Form::text('proof_name',null,['class'=>'form-control', 'id' => 'proof_name']); ?>
+
+        </div>
+    </div>
+
+    <?php if(isset($member)): ?>
+      
+        <div class="col-sm-4">
+            <div class="form-group">
+                <?php echo Form::label('proof_photo','Proof photo'); ?>
+
+                <?php echo Form::file('proof_photo',['class'=>'form-control', 'id' => 'proof_photo']); ?>
+
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <img alt="proof Pic" class="pull-right" src="<?php echo e(asset('media/member/' .$member->memberDetail->proof_image)); ?>"/  height="70" width="70">
+        </div>
+    <?php else: ?>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <?php echo Form::label('proof_photo','Proof photo'); ?>
+
+                <?php echo Form::file('proof_photo',['class'=>'form-control', 'id' => 'proof_photo']); ?>
+
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
+
+<div class="row">
+    <?php if(isset($member)): ?>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <?php echo Form::label('photo','Photo'); ?>
+
+                <?php echo Form::file('photo',['class'=>'form-control', 'id' => 'photo']); ?>
+
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <img alt="profile Pic" class="pull-right" src="<?php echo e(asset('media/member/' .$member->memberDetail->image)); ?>"/ height="70" width="70">
+        </div>
+    <?php else: ?>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <?php echo Form::label('photo','Photo'); ?>
+
+                <?php echo Form::file('photo',['class'=>'form-control', 'id' => 'photo']); ?>
+
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+        <?php echo Form::label('status','Status'); ?>
+
+        <!--0 for inactive , 1 for active-->
+            <?php echo Form::select('status',array('1' => 'Active', '0' => 'InActive'),null,['class' => 'form-control selectpicker show-tick show-menu-arrow', 'id' => 'status']); ?>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <?php echo Form::label('aim','Why do you plan to join?',['class'=>'control-label']); ?>
+
+            <?php echo Form::select('aim',array('0' => 'Fitness', '1' => 'Networking', '2' => 'Body Building', '3' => 'Fatloss', '4' => 'Weightgain', '5' => 'Others'),null,['class' => 'form-control selectpicker show-tick show-menu-arrow', 'id' => 'aim']); ?>
+
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <?php echo Form::label('source','How do you came to know about us?',['class'=>'control-label']); ?>
+
+            <?php echo Form::select('source',array('0' => 'Promotions', '1' => 'Word Of Mouth', '2' => 'Others'),null,['class' => 'form-control selectpicker show-tick show-menu-arrow', 'id' => 'source']); ?>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <?php echo Form::label('occupation','Occupation'); ?>
+
+                    <?php echo Form::select('occupation',array('0' => 'Student', '1' => 'Housewife','2' => 'Self Employed','3' => 'Professional','4' => 'Freelancer','5' => 'Others'),null,['class' => 'form-control selectpicker show-tick show-menu-arrow', 'id' => 'occupation']); ?>
+
+                </div>
+            </div>
+
+
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <?php echo Form::label('pin_code','Pin Code',['class'=>'control-label']); ?>
+
+                    <?php echo Form::text('pin_code',null,['class'=>'form-control', 'id' => 'pin_code']); ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="form-group">
+            <?php echo Form::label('address','Address'); ?>
+
+            <?php echo Form::textarea('address',null,['class'=>'form-control', 'id' => 'address', 'rows' => 5]); ?>
+
+        </div>
+    </div>
+</div>

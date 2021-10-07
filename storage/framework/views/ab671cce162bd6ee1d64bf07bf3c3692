@@ -1,0 +1,42 @@
+<?php $__env->startSection('content'); ?>
+    <div class="rightside bg-grey-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="<?php echo e(route('working-schedule.create')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus-square" aria-hidden="true"></i>&nbsp;Add new working schedule</a>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-striped" id="datatable">
+                        <thead>
+                            <th class="text-center">Member Code</th>
+                            <th class="text-center">Member Name</th>
+                            <th class="text-center">Member Contact</th>
+                            <th class="text-center">Action</th>
+                        </thead>
+                        <tbody>
+                            <?php foreach($members as $item): ?>
+                                <tr>
+                                    <td class="text-center"><?php echo e($item->member_code); ?></td>
+                                    <td class="text-center"><?php echo e($item->name); ?></td>
+                                    <td class="text-center"><?php echo e($item->contact); ?></td>
+                                    <td class="text-center">
+                                        <a href="<?php echo e(route('working-schedule.show', $item->id)); ?>" class="btn btn-success btn-sm"><i class="fa fa-clock-o" aria-hidden="true"></i> view working schedule</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('footer_script_init'); ?>
+    <script>
+        $(document).ready( function () {
+            $('#datatable').DataTable();
+        });
+    </script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

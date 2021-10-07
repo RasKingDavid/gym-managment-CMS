@@ -1,0 +1,63 @@
+<?php $__env->startSection('content'); ?>
+    <div class="rightside bg-grey-100">
+        <?php if($is_member): ?>
+            <div class="container">
+                <div class="row margin-top-10 align-items-stretch">
+                    <div class="c-dashboardInfo col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="wrap">
+                            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
+                                <i class="font-size-24 color-red-600 fa fa-dollar-sign"></i>
+                                </h4><span class="hind-font caption-12 c-dashboardInfo__count">
+                                    <div class="font-roboto " data-toggle="counter" data-start="0" data-from="0"
+                                    data-to="<?php echo e($due_amount); ?>" data-speed="500" data-refresh-interval="10"></div></span>
+                                    <span
+                                class="hind-font caption-12 c-dashboardInfo__subInfo">
+                                    Upcoming Payments (Still not done yet!)
+                                </span>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom:2%">
+                        <h4 class="text-center">Customer Invoices</h4>
+                    </div>
+                    <div class="col-md-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Invoice Number</th>
+                                <th>Total Amount</th>
+                                <th>Pending</th>
+                                <th>Discount</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <?php /* <th>Action</th> */ ?>
+                            </thead>
+                            <tbody>
+                                <?php foreach($invoices as $invoice): ?>
+                                    <tr>
+                                        <td><?php echo e($invoice->invoice_number); ?></td>
+                                        <td><?php echo e($invoice->total); ?></td>
+                                        <td><?php echo e($invoice->pending_amount); ?></td>
+                                        <td><?php echo e($invoice->discount_amount); ?></td>
+                                        <td>
+                                            <span class="<?php echo e(Utilities::getInvoiceLabel ($invoice->status)); ?>"><?php echo e(Utilities::getInvoiceStatus ($invoice->status)); ?></span>
+                                        </td>
+                                        <td><?php echo e($invoice->created_at->toDayDateTimeString()); ?></td>
+                                        <?php /* <td>
+                                            <a href="<?php echo e( ); ?>" class="btn btn-success btn-md">
+                                                View invoice
+                                            </a>
+                                        </td> */ ?>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('website.customer.dashboard.layouts.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,116 @@
+
+
+<?php $__env->startSection('content'); ?>
+    <div class="rightside bg-grey-100">
+        <?php if($is_member): ?>
+            <div class="container">
+                <div class="row margin-top-10 align-items-stretch">
+                    <div class="c-dashboardInfo col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="wrap">
+                            <table class="table table-striped">
+                                <thead>
+                                    <th class="text-center">Subscription Started</th>
+                                    <th class="text-center">Subscription Ends</th>
+                                    <th class="text-center">On Auto renewal</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><?php echo e(\Carbon\Carbon::parse($subscription->start_date)->format('d M Y h:m')); ?></td>
+                                        <td><?php echo e(\Carbon\Carbon::parse($subscription->end_date)->format('d M Y h:m')); ?></td>
+                                        <?php if($subscription->is_renewal == 0): ?>
+                                            <td class="bg-warning">No</td>
+                                        <?php else: ?>
+                                            <td class="bg-success">Yes</td>
+                                        <?php endif; ?>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> 
+                    <div class="c-dashboardInfo col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="wrap">
+                            <?php if($subscription->is_renewal == 0): ?>
+                                <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
+                                    No upcoming payments as your subscription is not on renewal.
+                                </h4>
+                                <span class="hind-font caption-12 c-dashboardInfo__count">
+                                    <div class="font-roboto " data-toggle="counter" data-start="0" data-from="0"
+                                        data-to="" data-speed="500" data-refresh-interval="10">
+                                    </div>
+                                </span>
+                                <span
+                                    class="hind-font caption-12 c-dashboardInfo__subInfo">
+                                        Upcoming Payments (Still not done yet!)
+                                </span>
+                            <?php else: ?>
+                                <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">
+                                    <?php if($subStatus == true): ?>
+                                        Your subscription has been expired.
+                                    <?php else: ?>
+                                        Please renew your subscription within - <?php echo e(\Carbon\Carbon::parse($subscription->end_date)->format('d M Y')); ?>
+
+                                    <?php endif; ?>
+                                </h4>
+                                <span class="hind-font caption-12 c-dashboardInfo__count">
+                                    <?php if($subStatus == true): ?>
+                                        Contact First-Fit for subscriptional details.
+                                    <?php else: ?>
+                                        <div class="font-roboto " data-toggle="counter" data-start="0" data-from="0"
+                                            data-to="<?php echo e($subInvoice->total); ?>" data-speed="500" data-refresh-interval="10">
+                                        </div>
+                                        <span
+                                            class="hind-font caption-12 c-dashboardInfo__subInfo">
+                                                Upcoming Payments (Still not done yet!)
+                                        </span>
+                                    <?php endif; ?>
+                                   
+                                </span>
+    
+                            <?php endif; ?>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom:2%">
+                        <h4 class="text-center">Customer Invoices</h4>
+                    </div>
+                    <div class="col-md-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <th>Invoice Number</th>
+                                <th>Total Amount</th>
+                                <th>Pending</th>
+                                <th>Discount</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <?php /* <th>Action</th> */ ?>
+                            </thead>
+                            <tbody>
+                                <?php foreach($invoices as $invoice): ?>
+                                    <tr>
+                                        <td><?php echo e($invoice->invoice_number); ?></td>
+                                        <td><?php echo e($invoice->total); ?></td>
+                                        <td><?php echo e($invoice->pending_amount); ?></td>
+                                        <td><?php echo e($invoice->discount_amount); ?></td>
+                                        <td>
+                                            <span class="<?php echo e(Utilities::getInvoiceLabel ($invoice->status)); ?>"><?php echo e(Utilities::getInvoiceStatus ($invoice->status)); ?></span>
+                                        </td>
+                                        <td><?php echo e($invoice->created_at->toDayDateTimeString()); ?></td>
+                                        <?php /* <td>
+                                            <a href="<?php echo e( ); ?>" class="btn btn-success btn-md">
+                                                View invoice
+                                            </a>
+                                        </td> */ ?>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('website.customer.dashboard.layouts.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

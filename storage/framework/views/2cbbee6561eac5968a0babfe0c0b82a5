@@ -1,0 +1,51 @@
+<?php $settings = Utilities::getSettings(); ?>
+<?php $__env->startSection('content'); ?>
+
+    <div class="rightside bg-grey-100">
+        <div class="container-fluid">
+
+            <div class="row"><!-- Main row -->
+                <div class="col-lg-12"><!-- Main col -->
+                    <table id="datatable" class="table table-striped">
+                        <thead>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Subject</th>
+                            <th>Message</th>
+                            <th>Received On</th>
+                            <?php /* <th>Actions</th> */ ?>
+                        </thead>
+
+                        <tbody>
+                            <?php foreach($web_enquiries as $item): ?>
+                                <tr>
+                                    <td><?php echo e($item->name); ?></td>
+                                    <td><?php echo e($item->email); ?></td>
+                                    <td><?php echo e($item->subject); ?></td>
+                                    <td><?php echo e($item->message); ?></td>
+                                    <td><?php echo e(Carbon\Carbon::parse($item->created_at)->format('d M Y m:s a')); ?></td>
+                                    
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div><!-- / Main col -->
+            </div><!-- / Main row -->
+        </div><!-- / Container -->
+    </div><!-- / Rightside -->
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('footer_script_init'); ?>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            gymie.markEnquiryAs();
+        });
+    </script>
+    
+    <script>
+        $(document).ready( function () {
+            $('#datatable').DataTable();
+        });
+    </script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

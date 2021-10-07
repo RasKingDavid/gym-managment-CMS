@@ -1,0 +1,206 @@
+   <li class="nav-dropdown <?php echo e(Utilities::setActiveMenu('dashboard*',true)); ?>">
+                    <a href="#">
+                        <i class="ion-home"></i> <span>Dashboard</span>
+                    </a>
+                     <ul>
+                        <li class="<?php echo e(Utilities::setActiveMenu('dashboard')); ?>"><a href="<?php echo e(action('DashboardController@index')); ?>">Dashboard Members</a></li>
+                        <?php if (\Entrust::can(['manage-gymie','manage-enquiries','add-enquiry'])) : ?>
+                        <li class="<?php echo e(Utilities::setActiveMenu('dashboard/charts')); ?>"><a href="<?php echo e(action('DashboardController@indexCharts')); ?>">Dashboard Charts</a></li>
+                        <?php endif; // Entrust::can ?>
+                    </ul>
+                </li>
+                
+                <?php if (\Entrust::can(['manage-gymie','manage-enquiries','view-enquiry'])) : ?>
+                <li class="nav-dropdown <?php echo e(Utilities::setActiveMenu('enquiries*',true)); ?>">
+                    <a href="#">
+                        <i class="ion-ios-telephone"></i> <span>Enquiries</span>
+                    </a>
+                    <ul>
+                        <li class="<?php echo e(Utilities::setActiveMenu('enquiries/all')); ?>"><a href="<?php echo e(action('EnquiriesController@index')); ?>">All Enquiries</a></li>
+                        <?php if (\Entrust::can(['manage-gymie','manage-enquiries','add-enquiry'])) : ?>
+                        <li class="<?php echo e(Utilities::setActiveMenu('enquiries/create')); ?>"><a href="<?php echo e(action('EnquiriesController@create')); ?>">Add Enquiry</a></li>
+                        <?php endif; // Entrust::can ?>
+                        <li class="<?php echo e(Utilities::setActiveMenu('enquiries/all')); ?>"><a href="<?php echo e(route('website-enquiries.index')); ?>">Website Enquiries</a></li>
+                    </ul>
+                </li>
+                <?php endif; // Entrust::can ?>
+
+                <?php if (\Entrust::can(['manage-gymie','manage-members','view-member'])) : ?>
+                <li class="nav-dropdown <?php echo e(Utilities::setActiveMenu('members*',true)); ?>">
+                    <a href="#">
+                        <i class="ion-person-add"></i> <span>Members</span>
+                    </a>
+                    <ul>
+                        <li class="<?php echo e(Utilities::setActiveMenu('members/all')); ?>"><a href="<?php echo e(action('MembersController@index')); ?>">All Members</a></li>
+                        <?php if (\Entrust::can(['manage-gymie','manage-members','add-member'])) : ?>
+                        <li class="<?php echo e(Utilities::setActiveMenu('members/create')); ?>"><a href="<?php echo e(action('MembersController@create')); ?>">Add Member</a></li>
+                        <?php endif; // Entrust::can ?>
+                        <li class="<?php echo e(Utilities::setActiveMenu('members/active')); ?>"><a href="<?php echo e(action('MembersController@active')); ?>">Active Members</a></li>
+                        <li class="<?php echo e(Utilities::setActiveMenu('members/inactive')); ?>"><a href="<?php echo e(action('MembersController@inactive')); ?>">Inactive Members</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="<?php echo e(route('working-schedule.index')); ?>">
+                        <i class="ion-ios-time"></i> Member Working Schedule
+                    </a>
+                </li>
+                <?php endif; // Entrust::can ?>
+
+                <?php if (\Entrust::can(['manage-gymie','manage-payments','view-payment'])) : ?>
+                <li class="nav-dropdown <?php echo e(Utilities::setActiveMenu('payments*',true)); ?>">
+                    <a href="#">
+                        <i class="ion-cash"></i> <span>Payments</span>
+                    </a>
+                    <ul>
+                        <li class="<?php echo e(Utilities::setActiveMenu('payments/all')); ?>"><a href="<?php echo e(action('PaymentsController@index')); ?>">All Payments</a></li>
+                        <?php if (\Entrust::can(['manage-gymie','manage-payments','add-payment'])) : ?>
+                        <li class="<?php echo e(Utilities::setActiveMenu('payments/create')); ?>"><a href="<?php echo e(action('PaymentsController@create')); ?>">Add Payment</a></li>
+                        <?php endif; // Entrust::can ?>
+                    </ul>
+                </li>
+                <?php endif; // Entrust::can ?>
+
+                <?php if (\Entrust::can(['manage-gymie','manage-subscriptions','view-subscription'])) : ?>
+                <li class="nav-dropdown <?php echo e(Utilities::setActiveMenu('subscriptions*',true)); ?>">
+                    <a href="#">
+                        <i class="ion-android-checkbox-outline"></i> <span>Subscriptions</span>
+                    </a>
+                    <ul>
+                        <li class="<?php echo e(Utilities::setActiveMenu('subscriptions/all')); ?>"><a href="<?php echo e(action('SubscriptionsController@index')); ?>">All
+                                Subscriptions</a></li>
+                        <?php if (\Entrust::can(['manage-gymie','manage-subscriptions','add-subscription'])) : ?>
+                        <li class="<?php echo e(Utilities::setActiveMenu('subscriptions/create')); ?>"><a href="<?php echo e(action('SubscriptionsController@create')); ?>">Add
+                                Subscription</a></li>
+                        <?php endif; // Entrust::can ?>
+                        <li class="<?php echo e(Utilities::setActiveMenu('subscriptions/expiring')); ?>"><a href="<?php echo e(action('SubscriptionsController@expiring')); ?>">Expiring
+                                Subscriptions</a></li>
+                        <li class="<?php echo e(Utilities::setActiveMenu('subscriptions/expired')); ?>"><a href="<?php echo e(action('SubscriptionsController@expired')); ?>">Expired
+                                Subscriptions</a></li>
+                    </ul>
+                </li>
+                <?php endif; // Entrust::can ?>
+
+            <!-- <li class="nav-dropdown <?php /* Utilities::setActiveMenu('reports*',true) */ ?>">
+                            <a href="#">
+                                <i class="fa fa-file"></i> <span>Reports</span>
+                            </a>
+                            <ul>
+                                <li class="<?php /* Utilities::setActiveMenu('reports/members/*') */ ?>"><a href="<?php /* action('ReportsController@gymMemberCharts') */ ?>">Members</a></li>
+                                <li class="<?php /* Utilities::setActiveMenu('reports/enquiries/*') */ ?>"><a href="<?php /* action('ReportsController@enquiryCharts') */ ?>">Enquiries</a></li>
+                                <li class="<?php /* Utilities::setActiveMenu('reports/subscriptions/*') */ ?>"><a href="<?php /* action('ReportsController@subscriptionCharts') */ ?>">Subscriptions</a></li>
+                                <li class="<?php /* Utilities::setActiveMenu('reports/payments/*') */ ?>"><a href="<?php /* action('ReportsController@paymentCharts') */ ?>">Payments</a></li>                            
+                                <li class="<?php /* Utilities::setActiveMenu('reports/expenses/*') */ ?>"><a href="<?php /* action('ReportsController@expenseCharts') */ ?>">Expenses</a></li>                            
+                                <li class="<?php /* Utilities::setActiveMenu('reports/invoices/*') */ ?>"><a href="<?php /* action('ReportsController@invoiceCharts') */ ?>">Invoices</a></li>                            
+                            </ul>
+                        </li> -->
+
+                <?php if (\Entrust::can(['manage-gymie','manage-sms'])) : ?>
+                <li class="nav-dropdown <?php echo e(Utilities::setActiveMenu('sms*',true)); ?>">
+                    <a href="#">
+                        <i class="ion-ios-email"></i> <span>EMAIL</span>
+                    </a>
+                    <ul>
+                        <li class="<?php echo e(Utilities::setActiveMenu('sms/triggers')); ?>"><a href="<?php echo e(action('SmsController@triggersIndex')); ?>">Triggers</a></li>
+                        <li class="<?php echo e(Utilities::setActiveMenu('sms/events')); ?>"><a href="<?php echo e(action('SmsController@eventsIndex')); ?>">Schedule message</a></li>
+                        <li class="<?php echo e(Utilities::setActiveMenu('sms/send')); ?>"><a href="<?php echo e(action('SmsController@send')); ?>">Send message</a></li>
+                        <li class="<?php echo e(Utilities::setActiveMenu('sms/log')); ?>"><a href="<?php echo e(action('SmsController@logIndex')); ?>">Log</a></li>
+                    </ul>
+                </li>
+                <?php endif; // Entrust::can ?>
+
+                <?php if (\Entrust::can(['manage-gymie','manage-invoices','view-invoice','manage-pos'])) : ?>
+                <li class="nav-dropdown <?php echo e(Utilities::setActiveMenu('invoices*',true)); ?>">
+                    <a href="#">
+                        <i class="ion-ios-paper"></i> <span>Invoices</span>
+                    </a>
+                    <ul>
+                        <li class="<?php echo e(Utilities::setActiveMenu('invoices/all')); ?>"><a href="<?php echo e(action('InvoicesController@index')); ?>">All Invoices</a></li>
+                        <li class="<?php echo e(Utilities::setActiveMenu('invoices/paid')); ?>"><a href="<?php echo e(action('InvoicesController@paid')); ?>">Paid Invoices</a></li>
+                        <li class="<?php echo e(Utilities::setActiveMenu('invoices/unpaid')); ?>"><a href="<?php echo e(action('InvoicesController@unpaid')); ?>">Unpaid Invoices</a>
+                        </li>
+                        <li class="<?php echo e(Utilities::setActiveMenu('invoices/partial')); ?>"><a href="<?php echo e(action('InvoicesController@partial')); ?>">Partial Invoices</a>
+                        </li>
+                        <li class="<?php echo e(Utilities::setActiveMenu('invoices/overpaid')); ?>"><a href="<?php echo e(action('InvoicesController@overpaid')); ?>">Overpaid
+                                Invoices</a></li>
+                        <li class="<?php echo e(Utilities::setActiveMenu('pos-invoices')); ?>"><a href="<?php echo e(route('pos.index')); ?>">POS Invoices</a></li>
+                        <li class="<?php echo e(Utilities::setActiveMenu('new.orders')); ?>"><a href="<?php echo e(route('new.orders')); ?>">Shop Invoices</a></li>
+                    </ul>
+                </li>
+                <?php endif; // Entrust::can ?>
+
+                <?php if (\Entrust::can(['manage-gymie','manage-expenses','view-expense'])) : ?>
+                <li class="nav-dropdown <?php echo e(Utilities::setActiveMenu('expenses*',true)); ?>">
+                    <a href="#">
+                        <i class="ion-social-usd"></i><span> Expenses</span>
+                    </a>
+                    <ul>
+                        <li class="<?php echo e(Utilities::setActiveMenu('expenses/all')); ?>"><a href="<?php echo e(action('ExpensesController@index')); ?>">All Expenses</a></li>
+                        <?php if (\Entrust::can(['manage-gymie','manage-expenses','add-expense'])) : ?>
+                        <li class="<?php echo e(Utilities::setActiveMenu('expenses/create')); ?>"><a href="<?php echo e(action('ExpensesController@create')); ?>">Add Expense</a></li>
+                        <?php endif; // Entrust::can ?>
+                        <?php if (\Entrust::can(['manage-gymie','manage-expenseCategories','view-expenseCategory'])) : ?>
+                        <li class="<?php echo e(Utilities::setActiveMenu('expenses/categories/all')); ?>"><a href="<?php echo e(action('ExpenseCategoriesController@index')); ?>">Expense
+                                Categories</a></li>
+                        <?php endif; // Entrust::can ?>
+                        <?php if (\Entrust::can(['manage-gymie','manage-expenseCategories','add-expenseCategory'])) : ?>
+                        <li class="<?php echo e(Utilities::setActiveMenu('expenses/categories/create')); ?>"><a href="<?php echo e(action('ExpenseCategoriesController@create')); ?>">Add
+                                Category</a></li>
+                        <?php endif; // Entrust::can ?>
+                    </ul>
+                </li>
+                <?php endif; // Entrust::can ?>
+
+                <?php if (\Entrust::can(['manage-gymie','manage-plans','view-plan'])) : ?>
+                <li class="nav-dropdown <?php echo e(Utilities::setActiveMenu('plans*',true)); ?>">
+                    <a href="#">
+                        <i class="ion-compose"></i> <span>Plans</span>
+                    </a>
+                    <ul>
+                        <li class="<?php echo e(Utilities::setActiveMenu('plans/all')); ?>"><a href="<?php echo e(action('PlansController@index')); ?>">All Plans</a></li>
+                        <?php if (\Entrust::can(['manage-gymie','manage-plans','add-plan'])) : ?>
+                        <li class="<?php echo e(Utilities::setActiveMenu('plans/create')); ?>"><a href="<?php echo e(action('PlansController@create')); ?>">Add Plan</a></li>
+                        <?php endif; // Entrust::can ?>
+                        <?php if (\Entrust::can(['manage-gymie','manage-services','view-service'])) : ?>
+                        <li class="<?php echo e(Utilities::setActiveMenu('plans/services/all')); ?>"><a href="<?php echo e(action('ServicesController@index')); ?>">Gym Services</a>
+                        </li>
+                        <?php endif; // Entrust::can ?>
+                        <?php if (\Entrust::can(['manage-gymie','manage-services','add-service'])) : ?>
+                        <li class="<?php echo e(Utilities::setActiveMenu('plans/services/create')); ?>"><a href="<?php echo e(action('ServicesController@create')); ?>">Add Service</a>
+                        </li>
+                        <?php endif; // Entrust::can ?>
+                    </ul>
+                </li>
+                <?php endif; // Entrust::can ?>
+                
+                <?php if (\Entrust::can(['manage-gymie','manage-users'])) : ?>
+                <li class="nav-dropdown <?php echo e(Utilities::setActiveMenu('user*',true)); ?>">
+                    <a href="#">
+                        <i class="ion-ios-people"></i> <span>Users</span>
+                    </a>
+                    <ul>
+                        <li class="<?php echo e(Utilities::setActiveMenu('user')); ?>"><a href="<?php echo e(action('AclController@userIndex')); ?>"><i class="fa fa-upload"></i> All
+                                Users</a></li>
+                        <li class="<?php echo e(Utilities::setActiveMenu('user/create')); ?>"><a href="<?php echo e(action('AclController@createUser')); ?>"><i class="fa fa-list"></i>
+                                Add new user</a></li>
+                        <li class="<?php echo e(Utilities::setActiveMenu('user/role')); ?>"><a href="<?php echo e(action('AclController@roleIndex')); ?>"><i class="fa fa-list"></i>
+                                Roles</a></li>
+                        <?php if (\Entrust::hasRole('Gymie')) : ?>
+                        <li class="<?php echo e(Utilities::setActiveMenu('user/permission')); ?>"><a href="<?php echo e(action('AclController@permissionIndex')); ?>"><i
+                                        class="fa fa-list"></i> Permissions</a></li>
+                        <?php endif; // Entrust::hasRole ?>
+                    </ul>
+                </li>
+                <?php endif; // Entrust::can ?>
+                <li>
+                    <a href="<?php echo e(route('category.index')); ?>"><i class="ion-android-list"></i> Categories</a>
+                    <a href="<?php echo e(route('product.index')); ?>"><i class="ion-ios-box"></i> Products</a>
+                    <a href="<?php echo e(route('pos.create')); ?>"><i class="ion-android-cart"></i> POS System</a>
+                </li>
+                <?php if (\Entrust::can(['manage-gymie','manage-settings'])) : ?>
+                <li class="<?php echo e(Utilities::setActiveMenu('settings*')); ?>">
+                    <a href="<?php echo e(action('SettingsController@edit')); ?>">
+                        <i class="fa fa-cogs fa-2x"></i> <span>Settings</span>
+                    </a>
+                </li>
+                <?php endif; // Entrust::can ?>

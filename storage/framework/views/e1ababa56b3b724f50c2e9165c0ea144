@@ -1,0 +1,76 @@
+
+<?php $settings = Utilities::getSettings(); ?>
+<?php $__env->startSection('content'); ?>
+
+    <div class="rightside bg-grey-100">
+        <div class="container-fluid">
+
+            <div class="row"><!-- Main row -->
+                <div class="col-lg-12"><!-- Main col -->
+                    <?php echo $__env->make('flash::message', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    <h4 class="text-center text-info">New Orders</h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <th>Customer</th>
+                            <th>Contact Number</th>
+                            <th>total</th>
+                            <th>Action</th>
+                        </thead>
+
+                        <tbody>
+                            <?php foreach($newOrders as $order): ?>
+                                <tr>
+                                    <td><?php echo e($order->buyer->name); ?></td>
+                                    <td><?php echo e($order->buyer->phone); ?></td>
+                                    <td><?php echo e($order->total); ?></td> 
+                                    <td>
+                                        <a href="<?php echo e(route('order.products', $order->id)); ?>" class="btn btn-success btn-md"><i class="fa fa-eye    "></i> view products</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div><!-- / Main col -->
+                <div class="col-lg-12"><!-- Main col -->
+                    <h4 class="text-center">All Orders</h4>
+                    <table id="datatable" class="table table-striped">
+                        <thead>
+                            <th>Customer</th>
+                            <th>Contact Number</th>
+                            <th>total</th>
+                            <th>Action</th>
+                        </thead>
+
+                        <tbody>
+                            <?php foreach($allOrders as $order): ?>
+                                <tr>
+                                    <td><?php echo e($order->buyer->name); ?></td>
+                                    <td><?php echo e($order->buyer->phone); ?></td>
+                                    <td><?php echo e($order->total); ?></td> 
+                                    <td>
+                                        <a href="<?php echo e(route('order.invoice.print', $order->id)); ?>" class="btn btn-success btn-md"><i class="fa fa-print    "></i></a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div><!-- / Main col -->
+            </div><!-- / Main row -->
+        </div><!-- / Container -->
+    </div><!-- / Rightside -->
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('footer_script_init'); ?>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            gymie.markEnquiryAs();
+        });
+    </script>
+    
+    <script>
+        $(document).ready( function () {
+            $('#datatable').DataTable();
+        });
+    </script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

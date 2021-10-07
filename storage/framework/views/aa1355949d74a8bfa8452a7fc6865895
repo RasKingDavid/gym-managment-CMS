@@ -1,0 +1,36 @@
+<?php $__env->startSection('content'); ?>
+    <div class="rightside bg-grey-100">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <h4 class="text-center">Invoice: #<?php echo e(str_pad($id,6,"0",STR_PAD_LEFT)); ?> Product List</h4>
+                </div>
+
+                <div class="col-12 col-md-12" style="margin-top: 2%">
+                    <table class="table table-bordered">
+                        <thead>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total Price</th>
+                        </thead>
+                        <tbody>
+                            <?php foreach($items as $item): ?>
+                                <tr>
+                                    <td><?php echo e($item->product_name); ?></td>
+                                    <td><?php echo e($item->quantity); ?></td>
+                                    <td><?php echo e($item->price); ?></td>
+                                    <td><?php echo e($item->price*$item->quantity); ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                            <tr>
+                                <td colspan="3" class="text-right">Total: <?php echo e($invoice->total); ?>/=</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('website.customer.dashboard.layouts.layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
